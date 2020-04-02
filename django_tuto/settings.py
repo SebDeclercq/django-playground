@@ -31,6 +31,7 @@ ALLOWED_HOSTS: List[str] = []
 # Application definition
 
 INSTALLED_APPS: List[str] = [
+    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -105,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS: List[Dict[str, str]] = [
 
 LANGUAGE_CODE: str = 'en-us'
 
-TIME_ZONE: str = 'UTC'
+TIME_ZONE: str = 'Europe/Paris'
 
 USE_I18N: bool = True
 
