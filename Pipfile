@@ -8,9 +8,11 @@ mypy = "*"
 black = "*"
 flake8 = "*"
 ipython = "*"
+pytest-django = "*"
+django-stubs = "*"
+pytest = "*"
 
 [packages]
-django-stubs = "*"
 django = "~=2.2"
 
 [requires]
