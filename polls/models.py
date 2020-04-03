@@ -1,3 +1,4 @@
+from __future__ import annotations
 from datetime import timedelta
 from django.db import models
 from django.db.models import CharField, DateTimeField, IntegerField, ForeignKey
@@ -25,3 +26,7 @@ class Choice(models.Model):
 
     def __str__(self) -> str:
         return self.choice_text
+
+    def __iadd__(self, inc: int) -> Choice:
+        self.votes += inc
+        return self
