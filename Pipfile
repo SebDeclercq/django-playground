@@ -11,6 +11,7 @@ ipython = "*"
 pytest-django = "*"
 django-stubs = "*"
 pytest = "*"
+pytest-cov = "*"
 
 [packages]
 django = "~=2.2"
