@@ -13,20 +13,13 @@ class Csv2Db:
             for record in reader:
                 self.save_record(record)
 
-    def save_record(self, record: Dict[str, str]) -> None:
-        try:
-            std: Standard = Standard(
-                numdos=record['numdos'],
-                refdoc=record['refdoc'],
-                datoff=datetime.strptime(record['datoff'], '%Y%m%d').date(),
-                ancart=record['ancart'],
-            )
-            std.save()
-        except ValidationError as e:
-            if 'this Numdos already exists' in str(e):
-                std = Standard.objects.get(numdos=record['numdos'])
-            else:
-                raise e
+    def save_record(self, record: Dict[str, str]) -> Standard:
+        std, _ = Standard.objects.get_or_create(
+            numdos=record['numdos'],
+            refdoc=record['refdoc'],
+            datoff=datetime.strptime(record['datoff'], '%Y%m%d').date(),
+            ancart=record['ancart'],
+        )
         File(
             numdos=record['numdos'],
             numdosvl=record['numdosvl'],
@@ -34,3 +27,4 @@ class Csv2Db:
             verling=record['verling'],
             standard_id=std.id,
         ).save()
+        return std
