@@ -12,7 +12,7 @@ def numdos_validator(numdos: str) -> None:
 
 class Standard(models.Model):
     numdos: CharField = models.CharField(
-        max_length=8, validators=[numdos_validator]
+        max_length=8, validators=[numdos_validator], unique=True
     )
     refdoc: CharField = models.CharField(max_length=200)
     datoff: DateField = models.DateField(null=True, blank=True)
