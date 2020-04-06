@@ -18,7 +18,7 @@ class Standard(models.Model):
     datoff: DateField = models.DateField(null=True, blank=True)
     ancart: CharField = models.CharField(max_length=200)
 
-    def save(self, *args: Any, **kwargs: Any) -> Any:
+    def save(self, *args: Any, **kwargs: Any) -> None:
         self.full_clean()
         return super().save(*args, **kwargs)
 
@@ -57,6 +57,6 @@ class File(models.Model):
         Standard, on_delete=models.CASCADE
     )
 
-    def save(self, *args: Any, **kwargs: Any) -> Any:
+    def save(self, *args: Any, **kwargs: Any) -> None:
         self.full_clean()
         return super().save(*args, **kwargs)
