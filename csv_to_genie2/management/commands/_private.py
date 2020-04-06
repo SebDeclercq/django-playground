@@ -22,15 +22,15 @@ class Csv2Db:
                 ancart=record['ancart'],
             )
             std.save()
-            File(
-                numdos=record['numdos'],
-                numdosvl=record['numdosvl'],
-                format=record['format'],
-                verling=record['verling'],
-                standard_id=std.id,
-            ).save()
         except ValidationError as e:
             if 'this Numdos already exists' in str(e):
-                pass
+                std = Standard.objects.get(numdos=record['numdos'])
             else:
-                raise e()
+                raise e
+        File(
+            numdos=record['numdos'],
+            numdosvl=record['numdosvl'],
+            format=record['format'],
+            verling=record['verling'],
+            standard_id=std.id,
+        ).save()
