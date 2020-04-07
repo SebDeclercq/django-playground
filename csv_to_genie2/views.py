@@ -10,6 +10,7 @@ from csv_to_genie2.serializers import FileSerializer, StandardSerializer
 class StandardViewSet(viewsets.ModelViewSet):
     queryset: Manager[Standard] = Standard.objects.all().order_by('numdos')
     serializer_class: type = StandardSerializer
+    lookup_field: str = 'numdos'
 
 
 class FileViewSet(viewsets.ModelViewSet):
