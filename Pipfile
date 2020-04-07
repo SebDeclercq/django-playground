@@ -12,9 +12,13 @@ pytest-django = "*"
 django-stubs = "*"
 pytest = "*"
 pytest-cov = "*"
+djangorestframework-stubs = "*"
 
 [packages]
 django = "~=2.2"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.8"

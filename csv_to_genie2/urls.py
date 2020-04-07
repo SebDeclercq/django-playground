@@ -13,10 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from typing import List
 from django.contrib import admin
 from django.urls import include, path
+from django.urls.resolvers import URLPattern
+from rest_framework import routers
+from csv_to_genie2 import views
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('genie2/', include('csv_to_genie2.urls')),
+
+router: routers.DefaultRouter = routers.DefaultRouter()
+router.register('standards', views.StandardViewSet)
+router.register('files', views.FileViewSet)
+
+
+app_name: str = 'genie2'
+
+urlpatterns: List[URLPattern] = [
+    path('api/', include(router.urls)),
 ]
