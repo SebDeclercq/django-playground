@@ -4,7 +4,7 @@ from django.core.management.base import (
     CommandError,
     CommandParser,
 )
-from ._private import Csv2Db
+from csv_to_genie2.csv_parser import Csv2Db
 
 
 class Command(BaseCommand):
