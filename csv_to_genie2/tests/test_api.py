@@ -37,7 +37,6 @@ def files(std: Standard) -> List[File]:
     return files
 
 
-@pytest.mark.current_dev
 class TestApi:
     @pytest.mark.django_db
     def test_get_standards(
@@ -55,7 +54,9 @@ class TestApi:
         assert res.json().get('format') == files[0].format
 
     @pytest.mark.django_db
-    def test_filter_file(self, client: APIClient, files: List[File]) -> None:
+    def test_filter_file_one_filter(
+        self, client: APIClient, files: List[File]
+    ) -> None:
         verling: str = 'F/E'
         res: HttpResponse = client.get(
             '/genie2/api/files/', {'verling': verling}
@@ -66,3 +67,25 @@ class TestApi:
             assert data.get('numdosvl') == files[i].numdosvl
             assert data.get('format') == files[i].format
             assert data.get('verling') == verling
+
+    @pytest.mark.django_db
+    def test_filter_file_many_filters(
+        self, client: APIClient, files: List[File]
+    ) -> None:
+        verling: str = 'F/E'
+        numdosvl: str = 'XS000000'
+        res: HttpResponse = client.get(
+            '/genie2/api/files/', {'verling': verling, 'numdosvl': numdosvl},
+        )
+        assert res.status_code == 200
+        assert len(res.json()) == 0, '2 F/E verlings but not numdosvl XS00000'
+
+    @pytest.mark.django_db
+    def test_standard_filter(self, client: APIClient, std: Standard) -> None:
+        url: str = '/genie2/api/standards/'
+        res: HttpResponse = client.get(url, {'ancart': 'XS000000'})
+        assert res.status_code == 200
+        assert len(res.json()) == 0
+        res = client.get(url, {'ancart': std.ancart})
+        assert res.status_code == 200
+        assert len(res.json()) == 1
