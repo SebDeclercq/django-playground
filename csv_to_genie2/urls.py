@@ -31,6 +31,7 @@ app_name: str = 'genie2'
 
 urlpatterns: List[URLPattern] = [
     path('api/', include(router.urls)),
+    path('api/actions/<str:action>', views.ActionView.as_view()),
     path(
         'api/token/',
         jwt_views.TokenObtainPairView.as_view(),

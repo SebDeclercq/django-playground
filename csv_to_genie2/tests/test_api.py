@@ -1,9 +1,13 @@
 from datetime import date
+from io import StringIO
 from typing import Any, Dict, List
+import csv
 from django.http import HttpResponse
 from rest_framework.test import APIClient
 import pytest
 from csv_to_genie2.models import File, Standard
+from csv_to_genie2.views import ActionView
+from .test_csv_to_db_command import CSV_CONTENT
 
 
 @pytest.fixture
@@ -89,3 +93,20 @@ class TestApi:
         res = client.get(url, {'ancart': std.ancart})
         assert res.status_code == 200
         assert len(res.json()) == 1
+
+    @pytest.mark.django_db
+    def test_action_insert(self, client: APIClient) -> None:
+        data: List[Dict[str, str]] = list(
+            csv.DictReader(StringIO(CSV_CONTENT), delimiter='\t')
+        )
+        res: HttpResponse = client.post(
+            '/genie2/api/actions/insert', data, format='json'
+        )
+        assert res.status_code == 200
+        assert len(res.json()) == len(data)
+        standards_numdos: List[str] = [s['numdos'] for s in res.json()]
+        assert all(record['numdos'] in standards_numdos for record in data)
+
+    def test_action_post_unknown(self, client: APIClient) -> None:
+        res: HttpResponse = client.post('/genie2/api/actions/yeah')
+        assert res.status_code == '400'

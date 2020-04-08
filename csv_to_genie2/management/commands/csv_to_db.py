@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
     def handle(self, *args: Any, **options: Any) -> None:
         try:
-            csv_to_db = Csv2Db()
+            csv_to_db: Csv2Db = Csv2Db()
             csv_to_db.parse(options['path_to_csv'])
         except KeyError:
             raise CommandError('Please provide the CSV path')
