@@ -22,7 +22,9 @@ class StandardSerializer(serializers.HyperlinkedModelSerializer):
 
 class FileSerializer(serializers.HyperlinkedModelSerializer):
     standard: HyperlinkedRelatedField = serializers.HyperlinkedRelatedField(
-        view_name='genie2:standard-detail', read_only=True
+        view_name='genie2:standard-detail',
+        read_only=True,
+        lookup_field='numdos',
     )
 
     class Meta:
