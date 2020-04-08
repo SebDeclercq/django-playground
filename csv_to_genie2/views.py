@@ -14,6 +14,7 @@ class StandardViewSet(viewsets.ModelViewSet):
     lookup_field: str = 'numdos'
     filter_backends: List[str] = [DjangoFilterBackend]
     filterset_fields: List[str] = ['numdos', 'refdoc', 'datoff', 'ancart']
+    permission_classes: List[str] = [permissions.IsAuthenticated]
 
 
 class FileViewSet(viewsets.ModelViewSet):
@@ -21,3 +22,4 @@ class FileViewSet(viewsets.ModelViewSet):
     serializer_class: type = FileSerializer
     filter_backends: List[type] = [DjangoFilterBackend]
     filterset_fields: List[str] = ['numdos', 'numdosvl', 'verling', 'format']
+    permission_classes: List[str] = [permissions.IsAuthenticated]

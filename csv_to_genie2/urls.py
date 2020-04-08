@@ -21,13 +21,24 @@ from rest_framework import routers
 from csv_to_genie2 import views
 
 
+from rest_framework_simplejwt import views as jwt_views
+
 router: routers.DefaultRouter = routers.DefaultRouter()
 router.register('standards', views.StandardViewSet)
 router.register('files', views.FileViewSet)
-
 
 app_name: str = 'genie2'
 
 urlpatterns: List[URLPattern] = [
     path('api/', include(router.urls)),
+    path(
+        'api/token/',
+        jwt_views.TokenObtainPairView.as_view(),
+        name='token_obtain_pair',
+    ),
+    path(
+        'api/token/refresh/',
+        jwt_views.TokenRefreshView.as_view(),
+        name='token_refresh',
+    ),
 ]
