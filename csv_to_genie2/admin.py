@@ -1,3 +1,6 @@
 from django.contrib import admin
+from csv_to_genie2.models import File, Standard
 
-# Register your models here.
+
+admin.site.register(File)
+admin.site.register(Standard)

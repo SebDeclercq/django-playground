@@ -13,10 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from typing import List
 from django.contrib import admin
 from django.urls import include, path
+from django.urls.resolvers import URLPattern
+from django.views.decorators.csrf import csrf_exempt
+from graphene_django.views import GraphQLView
 
-urlpatterns = [
+urlpatterns: List[URLPattern] = [
     path('admin/', admin.site.urls),
     path('genie2/', include('csv_to_genie2.urls')),
+    path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ]

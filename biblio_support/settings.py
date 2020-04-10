@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
+    'graphene_django',
     'csv_to_genie2.apps.CsvToGenie2Config',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -140,3 +141,5 @@ else:
     REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
+
+GRAPHENE: Dict[str, str] = {'SCHEMA': 'csv_to_genie2.schema.schema'}
