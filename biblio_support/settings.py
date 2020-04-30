@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
+from pathlib import Path
 from typing import Dict, List
 import os
 
@@ -121,7 +122,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL: str = '/static/'
+STATIC_ROOT: str = str(Path(BASE_DIR) / 'static')
 
 REST_FRAMEWORK: Dict[str, List[str]] = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -142,4 +144,9 @@ else:
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 
-GRAPHENE: Dict[str, str] = {'SCHEMA': 'csv_to_genie2.schema.schema'}
+GRAPHENE: Dict[str, str] = {'SCHEMA': 'csv_to_genie2.graphql.schema'}
+
+if os.environ.get('HEROKU'):
+    import django_heroku
+
+    django_heroku.settings(locals())

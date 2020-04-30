@@ -2,19 +2,10 @@ from __future__ import annotations
 from typing import Any
 from django.db.models import Manager
 from graphene_django.types import DjangoObjectType
-import graphene
 from graphql.execution.base import ResolveInfo
+import graphene
+from csv_to_genie2.graphql.types import FileType, StandardType
 from csv_to_genie2.models import File, Standard
-
-
-class FileType(DjangoObjectType):
-    class Meta:
-        model: type = File
-
-
-class StandardType(DjangoObjectType):
-    class Meta:
-        model: type = Standard
 
 
 class Query(graphene.ObjectType):
@@ -48,6 +39,3 @@ class Query(graphene.ObjectType):
             return Standard.objects.get(pk=id_)
         if numdos := kwargs.get('numdos'):
             return Standard.objects.get(numdos=numdos)
-
-
-schema: graphene.Schema = graphene.Schema(query=Query)
