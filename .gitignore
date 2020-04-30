@@ -5,4 +5,3 @@ db.sqlite3
 htmlcov/
 .coverage
 t.py
-genie2.csv
