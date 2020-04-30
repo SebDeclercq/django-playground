@@ -1,0 +1,34 @@
+query findall {
+  allStandards {
+    ...fields
+  }
+}
+
+mutation addstd {
+  createStandard(numdos: "FA123456", datoff: "2020-02-24") {
+    standard {
+      ...fields
+    }
+  }
+}
+
+mutation delstd {
+  deleteStandard(numdos: "FA123456") {
+    ok
+  }
+}
+
+mutation updatestd {
+  updateStandard(numdos: "FA123456", refdoc: "NF EN 123") {
+    standard {
+      ...fields
+    }
+  }
+}
+
+fragment fields on StandardType {
+  numdos
+  refdoc
+  ancart
+  datoff
+}
