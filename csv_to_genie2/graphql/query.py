@@ -9,8 +9,8 @@ from csv_to_genie2.models import File, Standard
 
 
 class Query(graphene.ObjectType):
-    all_files: graphene.List = graphene.List(FileType)
-    all_standards: graphene.List = graphene.List(StandardType)
+    files: graphene.List = graphene.List(FileType)
+    standards: graphene.List = graphene.List(StandardType)
     file: graphene.Field = graphene.Field(
         FileType, id=graphene.Int(), numdosvl=graphene.String(),
     )
@@ -18,12 +18,10 @@ class Query(graphene.ObjectType):
         StandardType, id=graphene.Int(), numdos=graphene.String(),
     )
 
-    def resolve_all_files(
-        self, info: ResolveInfo, **kwargs: Any
-    ) -> Manager[File]:
+    def resolve_files(self, info: ResolveInfo, **kwargs: Any) -> Manager[File]:
         return File.objects.all()
 
-    def resolve_all_standards(
+    def resolve_standards(
         self, info: ResolveInfo, **kwargs: Any
     ) -> Manager[Standard]:
         return Standard.objects.all()
